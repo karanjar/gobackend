@@ -21,6 +21,8 @@ type PaymentResponse struct {
 	Amount  float64 `json:"amount"`
 }
 
+// handle payments
+
 func HandlePayment(W http.ResponseWriter, R *http.Request) {
 	if R.Method != http.MethodPost {
 		http.Error(W, "Only POST allowed", http.StatusMethodNotAllowed)
@@ -43,5 +45,8 @@ func HandlePayment(W http.ResponseWriter, R *http.Request) {
 	}
 
 	W.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(W).Encode(res)
+	err = json.NewEncoder(W).Encode(res)
+	if err != nil {
+		return
+	}
 }
